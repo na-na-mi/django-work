@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #652;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    </style>
+</head>
+
+<body>
+<ul>
+  <li><a href="../app01">主页</a></li>
+  <li><a href="four">全国统计</a></li>
+    <li><a href="one">地区/省份统计</a></li>
+  <li><a href="third">占比与子类</a></li>
+  <li><a href="five">价格分析</a></li>
+    <li><a href="two">爆款产品</a></li>
+   <li><a href="three">发货时效</a></li>
+    <li><a href="second">客户分布</a></li>
+   <li><a href="rfm">客户分析</a></li>
+</ul>
+    <div id="main" style="width:700px;height: 700px; margin-left: 27%"></div>
+    <script>
+
+
+        const chartDom = document.getElementById('main');
+        const myChart = echarts.init(chartDom);
+        let option;
+
+        myChart.showLoading();
+$.getJSON('{% static 'rules.json' %}', function (graph) {
+  myChart.hideLoading();
+  graph.nodes.forEach(function (node) {
+    node.label = {
+      show: node.symbolSize > 30
+    };
+  });
+  option = {
+    title: {
+      text: 'Les Miserables',
+      subtext: 'Circular layout',
+      top: 'bottom',
+      left: 'right'
+    },
+    tooltip: {},
+    legend: [
+      {
+        data: graph.categories.map(function (a) {
+          return a.name;
+        })
+      }
+    ],
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+      grid: {
+          show: false,
+          top: '50%',    // 一下数值可为百分比也可为具体像素值
+      },
+    series: [
+      {
+        name: 'Les Miserables',
+        type: 'graph',
+        layout: 'circular',
+        circular: {
+          rotateLabel: true
+        },
+        data: graph.nodes,
+        links: graph.links,
+        categories: graph.categories,
+        roam: true,
+        label: {
+          position: 'center',
+          formatter: '{b}'
+        },
+        lineStyle: {
+          color: 'source',
+          curveness: 0.3
+        }
+      }
+    ]
+  };
+  myChart.setOption(option);
+});
+
+option && myChart.setOption(option);
+
+    </script>
+</body>
+
+</html>

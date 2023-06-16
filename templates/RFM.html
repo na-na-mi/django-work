@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户价值</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #4a92ff;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    .cont {
+            display: flex;
+        }
+
+        table {
+            border: 1px solid transparent;
+            border-bottom:none;
+        }
+
+        .pareto {
+            width: 500px;
+            height: 550px;
+            overflow: hidden;
+            overflow-y: auto;
+            position:fixed;
+            left: 700px;
+            text-align:center;
+        }
+
+        .dataframe th{
+            padding-top: 20px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+  <li><a href="../ra">主页</a></li>
+  <li><a href="four">全国统计</a></li>
+    <li><a href="one">地区/省份统计</a></li>
+  <li><a href="third">占比与子类</a></li>
+  <li><a href="five">价格分析</a></li>
+    <li><a href="two">爆款产品</a></li>
+<li><a href="three">发货时效</a></li>
+    <li><a href="second">客户分布</a></li>
+   <li><a href="rfm">客户分析</a></li>
+</ul>
+
+    <script>
+        // 读取rfm.txt文件
+        var data = {% include 'rfm.txt' %};
+
+        // 读取pareto.txt文件
+        var pareto = {% include 'pareto.txt' %};
+    </script>
+    <div class="cont">
+        <div>
+            <div id="main3" style="width: 700px; height: 300px;"></div>
+            <div id="main" style="width: 700px; height: 300px;"></div>
+            <div id="main2" style="width: 700px; height: 300px;"></div>
+            <div id="main4" style="width: 700px; height: 300px;"></div>
+        </div>
+        <div class="pareto">
+            <h3>头部客户(完成20%销售额)</h3>
+            {% include 'pareto.html' %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const myChart3 = echarts.init(document.getElementById("main3"));
+        option3 = {
+            title: {
+                text: '客户贡献(帕累托法则)'
+              },
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                },
+                formatter:function (params){
+                    const i = pareto['value'].indexOf(params[0].data);
+                    return '<div>'+'客户名:'+pareto['data'][i]['客户名']+'<br>'+'销售额:'+pareto['data'][i]['销售额']+
+                    '<br>'+'排名:'+pareto['data'][i]['排名']+'<br>'+'销售额%:'+pareto['data'][i]['销售额%']+'%'+
+                    '<br>'+'客户数%:'+pareto['data'][i]['客户数%']+'%'+'</div>';
+                }
+              },
+              xAxis: {
+                data: pareto['num'],
+                type: 'category',
+                name: '客户数%',
+                axisLabel: {
+                    textStyle: {
+                        fontSize: '6'
+                    }
+                }
+              },
+              yAxis: {
+                  type: 'value',
+                  name: '销售额%',
+                  alignTicks: true,
+                  axisLine: {
+                    show: false,
+                  }
+                },
+              visualMap: {
+                show: true,
+                min: 0,
+                max: 100,
+                itemHeight:80,
+                left: 'right',
+                top: 50,
+                dimension: 1,
+                inRange: {
+                  color: ['#4e98d9', '#36ea45', '#ba9550'].reverse()
+                }
+              },
+              series: {
+                  name: 'RFM客户数',
+                  data: pareto['value'],
+                  type: 'bar',
+                  yAxisIndex: 0,
+                  markLine: {
+                    data: [
+                        [   {xAxis:0, yAxis:80, symbol: 'circle'},
+                            {xAxis:'100', yAxis:80, symbol: 'arrow'}
+                        ],
+                        [   {xAxis:0, yAxis:20, symbol: 'circle'},
+                            {xAxis:'100', yAxis:20, symbol: 'arrow'}
+                        ],
+                    ]
+                  },
+                  showBackground: true,
+                  backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                  }
+                }
+            };
+        myChart3.setOption(option3);
+    </script>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById("main"));
+        option = {
+            title: {
+                text: 'RFM分级分析'
+              },
+              legend: {},
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                }
+              },
+              xAxis: {
+                type: 'category',
+                data: ['一般价值客户', '重要保持客户', '潜在客户', '重要发展客户', '一般保持客户', '一般发展客户', '高价值客户', '重要挽留客户'],
+                axisLabel: {
+                  rotate: 30 // 旋转30度
+                }
+              },
+              yAxis: [{
+                  type: 'value',
+                  name: '客户id计数',
+                  nameLocation: 'middle',
+                  nameGap: 30,
+                  position: 'left',
+                  alignTicks: true,
+                  axisLine: {
+                    show: false,
+                  }
+                },
+
+                {
+                  type: 'value',
+                  name: '销售额',
+                  nameLocation: 'middle',
+                  nameGap: 50,
+                  position: 'right',
+                  alignTicks: true,
+                  axisLine: {
+                    show: false,
+                  },
+                  axisLabel: {
+                      formatter: function (val) {
+                          if (val !== 0){
+                            return val / 1000000 + ',000K';  // 将val除以1000,然后拼接'K'
+                          }
+                          else{
+                            return val + 'k';
+                          }
+                      }
+                  }
+                }
+              ],
+              series: [
+                {
+                  name: 'RFM客户数',
+                  data: data['name'],
+                  type: 'bar',
+                  label: {
+                    show: true,
+                    position: 'top'
+                  },
+                    itemStyle:{
+                                    normal:{
+                                        color:'#4ad2ff'
+                                    }
+                                },
+                  yAxisIndex: 0,
+                  showBackground: true,
+                  backgroundStyle: {
+                    color: 'rgba(88,158,3,0.2)'
+                  }
+                },
+                {
+                  name: 'RFM销售额',
+                  data: data['value'],
+                  type: 'bar',
+                  yAxisIndex: 1,
+                    itemStyle:{
+                                    normal:{
+                                        color:'#4aff4d'
+                                    }
+                                },
+                  showBackground: true,
+                  backgroundStyle: {
+                    color: 'rgba(180,234,180,0.73)'
+                  }
+                }
+              ],
+
+            };
+        myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+        var myChart2 = echarts.init(document.getElementById("main2"));
+        option2 = {
+            title: {
+                text: 'R值分布情况(RFM)'
+              },
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                }
+              },
+              xAxis: {
+                data: data['time'],
+                type: 'category',
+                name: '天',
+                axisLabel: {
+                    textStyle: {
+                        fontSize: '6'
+                    }
+                }
+              },
+              yAxis: {
+                  type: 'value',
+                  name: '客户id计数',
+                  nameLocation: 'middle',
+                  nameGap: 30,
+                  position: 'left',
+                  alignTicks: true,
+                  axisLine: {
+                    show: false,
+                  }
+                },
+              visualMap: {
+                show: true,
+                min: 0,
+                max: 250,
+                itemHeight:80,
+                left: 'right',
+                top: 50,
+                dimension: 1,
+                inRange: {
+                  color: ['#d9734e', '#368aea', '#ba5079'].reverse()
+                }
+              },
+              series: {
+                  name: 'RFM客户数',
+                  data: data['rfm_r'],
+                  type: 'bar',
+                  label: {
+                    show: true,
+                    position: 'top'
+                  },
+                  yAxisIndex: 0,
+                  showBackground: true,
+                  backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                  }
+                }
+            };
+        myChart2.setOption(option2);
+    </script>
+    <script type="text/javascript">
+        var myChart4 = echarts.init(document.getElementById("main4"));
+        option4 = {
+            title: {
+                text: 'F值分布情况(RFM)'
+              },
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                }
+              },
+              xAxis: {
+                data: data['sum'],
+                type: 'category',
+                name: '件',
+                axisLabel: {
+                    textStyle: {
+                        fontSize: '6'
+                    }
+                }
+              },
+              yAxis: {
+                  type: 'value',
+                  name: '客户id计数',
+                  nameLocation: 'middle',
+                  nameGap: 30,
+                  position: 'left',
+                  alignTicks: true,
+                  axisLine: {
+                    show: false,
+                  }
+                },
+              visualMap: {
+                show: true,
+                min: 0,
+                max: 120,
+                itemHeight:80,
+                left: 'right',
+                top: 50,
+                dimension: 1,
+                inRange: {
+                  color: ['#d94e5d', '#eac736', '#50a3ba'].reverse()
+                }
+              },
+              series: {
+                  name: 'RFM客户数',
+                  data: data['rfm_f'],
+                  type: 'bar',
+                  label: {
+                    show: true,
+                    position: 'top'
+                  },
+                  yAxisIndex: 0,
+                  showBackground: true,
+                  backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                  }
+                }
+            };
+        myChart4.setOption(option4);
+    </script>
+
+</body >
+
+</html>

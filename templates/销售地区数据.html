@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大屏一</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap-grid.css" rel="stylesheet">
+    <style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #4a92ff;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    </style>
+</head>
+
+<body>
+<ul>
+  <li><a href="../ra">主页</a></li>
+  <li><a href="four">全国统计</a></li>
+    <li><a href="one">地区/省份统计</a></li>
+  <li><a href="third">占比与子类</a></li>
+  <li><a href="five">价格分析</a></li>
+    <li><a href="two">爆款产品</a></li>
+<li><a href="three">发货时效</a></li>
+    <li><a href="second">客户分布</a></li>
+   <li><a href="rfm">客户分析</a></li>
+</ul>
+
+    <style>
+    #border-primary {
+        width: 100vw;
+        height: 100vh;
+        float: left;
+
+    }
+
+    #border-primary #bar_1 {
+        float: left;
+        width: 50vw;
+        height: 100vh;
+    }
+
+    #border-primary #bar_2 {
+        float: left;
+        width: 50vw;
+        height: 100vh;
+    }
+
+    #border-primary #bar_3 {
+        float: left;
+        width: 50vw;
+        height: 100vh;
+    }
+
+    #border-primary #bar_4 {
+        float: left;
+        width: 50vw;
+        height: 100vh;
+    }
+</style>
+<div id="border-primary">
+    <div id="bar_1" style="width:32vw;height:35vh"></div>
+    <div id="bar_2" style="width:32vw;height:35vh"></div>
+    <div id="bar_3" style="width:32vw;height:35vh"></div>
+    <div id="bar_4" style="width:95vw;height:55vh " ></div>
+</div>
+<script type="text/javascript">
+    var myChart1 = echarts.init(document.getElementById("bar_1"));
+    option = {
+        title: {
+            text: '销售额',
+            left: '0%'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['2016', '2017', '2018'],
+
+            left: 'right'
+        },
+        toolbox: {
+            show: true,
+            left: 'right',
+            top: 'center',
+        },
+        xAxis: [
+            {
+                name: '地区',
+                type: 'category',
+                data: ['西北', '东北', '西南', '东南'],
+
+            }
+        ],
+
+        yAxis: [
+            {
+                type: 'value',
+                name: '销售额',
+                alignTicks: true,
+                axisLine: {
+                    show: true,
+                },
+            },
+        ],
+        series: [
+            {
+                name: '2016',
+                type: 'bar',
+                data: [343.19, 424.35, 546.24, 455]
+            },
+            {
+                name: '2017',
+                type: 'bar',
+                data: [412, 501, 511, 455],
+                                                            itemStyle:{
+                                    normal:{
+                                        color:'#36ea45'
+                                    }
+                                },
+            },
+            {
+                name: '2018',
+                type: 'bar',
+                data: [474, 629, 611, 455],
+                                            itemStyle:{
+                                    normal:{
+                                        color:'#4ad2ff'
+                                    }
+                                },
+            },
+
+        ],
+    }
+    myChart1.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart2 = echarts.init(document.getElementById("bar_2"));
+    option = {
+        title: {
+            text: '数量',
+            left: '0%'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['2016', '2017', '2018'],
+            left: 'right'
+        },
+        toolbox: {
+            show: true,
+            left: 'right',
+            top: 'center',
+        },
+        xAxis: [
+            {
+                name: '地区',
+                type: 'category',
+                data: ['西北', '东北', '西南', '东南']
+            }
+        ],
+
+        yAxis: [
+            {
+                type: 'value',
+                name: '数量',
+                alignTicks: true,
+                axisLine: {
+                    show: true,
+                },
+            },
+        ],
+        series: [
+            {
+                name: '2016',
+                type: 'bar',
+                data: [343.19, 424.35, 546.24, 455]
+            },
+            {
+                name: '2017',
+                type: 'bar',
+                data: [412, 501, 511, 455],
+                                                            itemStyle:{
+                                    normal:{
+                                        color:'#36ea45'
+                                    }
+                                },
+            },
+            {
+                name: '2018',
+                type: 'bar',
+                data: [474, 629, 611, 455],
+                                            itemStyle:{
+                                    normal:{
+                                        color:'#4ad2ff'
+                                    }
+                                },
+            }
+        ],
+    }
+    myChart2.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart3 = echarts.init(document.getElementById("bar_3"));
+    option = {
+        title: {
+            text: '利润',
+            left: '0%'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['2016', '2017', '2018'],
+            left: 'right'
+        },
+        toolbox: {
+            show: true,
+            left: 'right',
+            top: 'center',
+        },
+        xAxis: [
+            {
+                name: '地区',
+                type: 'category',
+                data: ['西北', '东北', '西南', '东南']
+            }
+        ],
+
+        yAxis: [
+            {
+                type: 'value',
+                name: '利润',
+                alignTicks: true,
+                axisLine: {
+                    show: true,
+                },
+            },
+        ],
+        series: [
+            {
+                name: '2016',
+                type: 'bar',
+                data: [343.19, 424.35, 546.24, 455]
+            },
+            {
+                name: '2017',
+                type: 'bar',
+                data: [412, 501, 511, 455],
+                                            itemStyle:{
+                                    normal:{
+                                        color:'#36ea45'
+                                    }
+                                },
+            },
+            {
+                name: '2018',
+                type: 'bar',
+                data: [474, 629, 611, 455],
+                                            itemStyle:{
+                                    normal:{
+                                        color:'#4ad2ff'
+                                    }
+                                },
+            }
+        ],
+    }
+    myChart3.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart4 = echarts.init(document.getElementById("bar_4"));
+    option = {
+        title: [
+            {
+                text: '2018销售额',
+                left: '7%',
+                top: '4%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2018数量',
+                left: '7%',
+                top: '34%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+
+            },
+            {
+                text: '2018利润',
+                left: '7%',
+                top: '64%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+
+            {
+                text: '2017销售额',
+                left: '32%',
+                top: '4%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2017数量',
+                left: '32%',
+                top: '34%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2017利润',
+                left: '32%',
+                top: '64%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2016销售额',
+                left: '57%',
+                top: '4%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2016数量',
+                left: '57%',
+                top: '34%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            },
+            {
+                text: '2016利润',
+                left: '57%',
+                top: '64%',
+                textStyle: {
+                    color: '#000000',
+                    fontSize: 12
+                }
+            }
+        ],
+        tooltip: {
+            show: true,
+            formatter: "{a} <br/>{b} : {d}%"
+        },
+        legend: {
+            orient: 'vertical',
+            right: 366,
+            top: 22,
+            data: ['东北', '华北', '华东', '中南', '西南', '西北']
+        },
+        series: [
+            {
+                name: '2018销售额',
+                type: 'pie',
+                center: ['10%', '20%'],
+                radius: '25%',
+                data: [
+                    { value: 60, name: '东北' },
+                    { value: 8, name: '华北' },
+                    { value: 8, name: '华东' },
+                    { value: 15, name: '中南' },
+                    { value: 4, name: '西南' },
+                    { value: 5, name: '西北' },
+                ],
+
+            },
+            {
+                name: '2018数量',
+                type: 'pie',
+                center: ['10%', '50%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+            },
+            {
+                name: '2018利润',
+                type: 'pie',
+                center: ['10%', '80%'],
+                radius: '25%',
+                data: [
+                    { value: 1000, name: '东北' },
+                    { value: 2500, name: '中南' },
+                    { value: 3000, name: '华东' },
+                    { value: 1500, name: '华北' },
+                    { value: 900, name: '西北' },
+                    { value: 1100, name: '西南' },
+                ],
+            },
+            {
+                name: '2017销售额',
+                type: 'pie',
+                center: ['35%', '20%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+
+            },
+            {
+                name: '2017数量',
+                type: 'pie',
+                center: ['35%', '50%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+            },
+            {
+                name: '2017利润',
+                type: 'pie',
+                center: ['35%', '80%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+            },
+            {
+                name: '2016销售额',
+                type: 'pie',
+                center: ['60%', '20%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+            },
+            {
+                name: '2016数量',
+                type: 'pie',
+                center: ['60%', '50%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+
+            },
+            {
+                name: '2016利润',
+                type: 'pie',
+                center: ['60%', '80%'],
+                radius: '25%',
+                data: [
+                    { value: 200, name: '东北' },
+                    { value: 130, name: '中南' },
+                    { value: 300, name: '华东' },
+                    { value: 150, name: '华北' },
+                    { value: 100, name: '西北' },
+                    { value: 120, name: '西南' },
+                ],
+
+            },
+        ],
+                   itemStyle: {//系列级个性化
+                    normal: {
+                        color: function (params) {
+                            var colorList = [
+                                '#339CD1', '#FE8463', '#9BCA63', '#FAD860', '#DC143C', '#9932CC'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+                    }
+                }
+    };
+    myChart4.setOption(option);
+</script>
+
+
+
+
+</body>
+
+</html>
